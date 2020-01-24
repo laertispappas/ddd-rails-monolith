@@ -13,6 +13,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
+group :test do
+  gem "factory_bot_rails"
+end
+
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
