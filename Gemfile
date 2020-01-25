@@ -9,6 +9,8 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'dry-struct'
+gem 'dry-container'
+gem 'dry-auto_inject'
 
 group :development, :test do
   gem 'rspec-rails'
