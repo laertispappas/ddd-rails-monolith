@@ -1,0 +1,40 @@
+module ActiveRepository
+  module BaseRepository
+    def find_all
+      raise NotImplementedError, "Abstract method"
+    end
+
+    def get(_id)
+      raise NotImplementedError, "Abstract method"
+    end
+
+    def store(entity)
+      unit_of_work.register_added(entity, self)
+    end
+
+    def set(key, entity)
+      if get(key).nil?
+        store(entity)
+      else
+        unit_of_work.register_changed(entity, self)
+      end
+    end
+
+    def remove(entity)
+      unit_of_work.register_removed(entity, self)
+    end
+
+    # Callback from unit of work
+    def persist_new(entity)
+      raise NotImplementedError, "Abstract method"
+    end
+
+    def persist_updated(item)
+      raise NotImplementedError, "Abstract method"
+    end
+
+    def persist_deleted(entity)
+      raise NotImplementedError, "Abstract method"
+    end
+  end
+end
