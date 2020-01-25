@@ -5,6 +5,7 @@ module Booking
         attribute :booking_id, Types.Instance(ValueObjects::BookingId).optional.default(nil)
         attribute :booking_amount, Types.Instance(ValueObjects::BookingAmount)
         attribute :location, Types.Instance(Entities::Location)
+        attribute :route_specification, Types.Instance(ValueObjects::RouteSpecification)
       end
     end
   end
