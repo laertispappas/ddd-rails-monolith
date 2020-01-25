@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  module UrlHelper
+    def self.path(context, relative_path, action)
+      "#{context}/application/controllers/#{relative_path}##{action}"
+    end
+  end
+  post "/bookings", to: UrlHelper.path(:booking, "cargo_bookings", :create)
 end
