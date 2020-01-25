@@ -1,6 +1,3 @@
-class Entity
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attribute :id, :integer
+class Entity < Dry::Struct
+  attribute :id, Types::String.optional.default(nil)
 end
