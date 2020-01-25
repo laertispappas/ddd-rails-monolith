@@ -8,7 +8,8 @@ module Booking
           booking_id: booking_id, booking_amount: booking_amount,
           location: location,
           route_specification: route_specification,
-          cargo_itinerary: cargo_itinerary
+          cargo_itinerary: cargo_itinerary,
+          delivery: delivery
         )
       }
       let(:arrival_deadline) { DateTime.new }
@@ -26,6 +27,7 @@ module Booking
                                 unload_time: DateTime.new)
         ])
       }
+      let(:delivery) { ValueObjects::Delivery.new }
 
       it { expect(cargo).to be_present }
     end
