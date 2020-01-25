@@ -5,10 +5,10 @@ module Booking
         Booking::Application::Services::CargoBookingService.new
       }
       register(:cargo_repository) {
-        "TODO_CARGO_REPO"
+        Infrastructure::Repositories::CargoRepository.new
       }
       register(:cargo_routing_service) {
-        "TODO_CARGO_ROUTING_SERVICE"
+        Infrastructure::Services::CargoRoutingService
       }
     end
 
