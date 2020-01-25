@@ -5,7 +5,14 @@ module Booking
     module Controllers
       RSpec.describe CargoBookingsController, type: :request do
         let(:path) { "/bookings" }
-        let(:params) {{}}
+        let(:params) {
+          {
+            booking_amount: 1,
+            origin_location: "ATH",
+            dest_location: "HAM",
+            dest_arrival_deadline: Time.now.iso8601
+          }
+        }
         let(:do_request) { post path, params: params }
 
         it "responds with the correct http response" do
