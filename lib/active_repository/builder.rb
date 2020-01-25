@@ -40,7 +40,7 @@ module ActiveRepository
       base.include(InstanceMethods)
 
       base.include(BaseRepository)
-      # set_unit_of_work(base)
+      set_unit_of_work(base)
 
       set_persistence_proxy(base, ActiveRepository::ActiveRecord)
       super

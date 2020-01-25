@@ -24,6 +24,10 @@ module ActiveRepository
       unit_of_work.register_removed(entity, self)
     end
 
+    def commit!
+      unit_of_work.commit!
+    end
+
     # Callback from unit of work
     def persist_new(entity)
       raise NotImplementedError, "Abstract method"
