@@ -8,7 +8,7 @@ module Booking
         Infrastructure::Repositories::CargoRepository.new
       }
       register(:cargo_routing_service) {
-        Infrastructure::Services::CargoRoutingService
+        Infrastructure::Services::CargoRoutingService.new
       }
     end
 
