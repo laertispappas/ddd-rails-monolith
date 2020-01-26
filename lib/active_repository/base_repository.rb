@@ -1,13 +1,5 @@
 module ActiveRepository
   module BaseRepository
-    def find_all
-      raise NotImplementedError, "Abstract method"
-    end
-
-    def get(_id)
-      raise NotImplementedError, "Abstract method"
-    end
-
     def store(entity)
       unit_of_work.register_added(entity, self)
     end

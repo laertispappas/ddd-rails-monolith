@@ -7,8 +7,11 @@ module Booking
         mapper(Mappers::CargoMapper)
         persists_to(:cargos)
 
+        def get(booking_id)
+          mapper.to_entity(persistence.find_by(booking_id: booking_id))
+        end
+
         def find_all
-          # (entity_manage | unit_of_work).find_all(query)
         end
 
         def find_all_booking_ids

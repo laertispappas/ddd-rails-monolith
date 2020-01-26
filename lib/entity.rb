@@ -1,3 +1,3 @@
 class Entity < Dry::Struct
-  attribute :id, Types::String.optional.default(nil)
+  attribute :id, Types::Integer.optional.default(nil)
 end
