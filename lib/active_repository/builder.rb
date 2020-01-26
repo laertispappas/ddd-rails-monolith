@@ -7,9 +7,9 @@ module ActiveRepository
     end
 
     module ClassMethods
-      def maps_to(entity)
-        define_method :mapped_entity do
-          @entity = entity
+      def mapper(mapper)
+        define_method :mapper do
+          @mapper = mapper
         end
       end
 
