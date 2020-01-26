@@ -59,7 +59,7 @@ module ActiveRepository
     def set_unit_of_work(receiver)
       receiver.class_eval do
         define_method :unit_of_work do
-          @unit_of_work ||= UnitOfWork.new
+          @unit_of_work ||= UnitOfWork.new(ActiveRepository::ActiveRecord)
         end
       end
     end

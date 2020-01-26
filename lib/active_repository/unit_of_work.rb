@@ -1,6 +1,9 @@
 module ActiveRepository
   class UnitOfWork
-    def initialize
+    attr_reader :transaction_manager
+
+    def initialize(transaction_manager)
+      @transaction_manager = transaction_manager
       set_init!
     end
 
@@ -17,19 +20,19 @@ module ActiveRepository
     end
 
     def commit!
-      # TODO: open transaction
-      deleted_entities.each do |entity, repo|
-        repo.send :persist_deleted, entity
-      end
+      transaction_manager.transaction do
+        deleted_entities.each do |entity, repo|
+          repo.send :persist_deleted, entity
+        end
 
-      added_entities.each do |entity, repo|
-        repo.send :persist_new, entity
-      end
+        added_entities.each do |entity, repo|
+          repo.send :persist_new, entity
+        end
 
-      changed_entities.each do |entity, repo|
-        repo.send :persist_updated, entity
+        changed_entities.each do |entity, repo|
+          repo.send :persist_updated, entity
+        end
       end
-
       set_init!
     end
 
