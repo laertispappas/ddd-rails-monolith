@@ -20,6 +20,8 @@ module ActiveRepository
       unit_of_work.commit!
     end
 
+    private
+
     # Callback from unit of work
     def persist_new(entity)
       raise NotImplementedError, "Abstract method"

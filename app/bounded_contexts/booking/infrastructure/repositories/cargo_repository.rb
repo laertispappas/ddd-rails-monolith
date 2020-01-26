@@ -12,15 +12,20 @@ module Booking
         end
 
         def find_all
+          persistence.all.map { |entity| mapper.to_entity(entity) }
         end
 
         def find_all_booking_ids
-          # TODO
+          persistence.all.map(&:booking_id).flat_map do |booking_id|
+            Domain::ValueObjects::BookingId.new(value: booking_id)
+          end
         end
 
         def next_booking_id
           SecureRandom.uuid.upcase
         end
+
+        private
 
         # unit of work callbacks.
 

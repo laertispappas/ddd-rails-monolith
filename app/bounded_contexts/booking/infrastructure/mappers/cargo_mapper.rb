@@ -5,7 +5,6 @@ module Booking
         module_function
 
         def to_entity(dao)
-          p dao.as_json
           Domain::Aggregates::Cargo.new(
             id: dao.id,
             booking_id: Domain::ValueObjects::BookingId.new(value: dao.booking_id),
