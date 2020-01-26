@@ -7,7 +7,12 @@ module Booking
         mapper(Mappers::CargoMapper)
         persists_to(:cargos)
 
-        def get(booking_id)
+        #
+        def get(id)
+          mapper.to_entity(persistence.find_by(id: id))
+        end
+
+        def get_by_booking_id(booking_id)
           mapper.to_entity(persistence.find_by(booking_id: booking_id))
         end
 
@@ -44,6 +49,10 @@ module Booking
             location: Domain::Entities::Location.new(name: "name", un_loc_code: "un_loc_code"))
 
           persistence.create(mapper.to_dao(cargo))
+        end
+
+        def persist_updated(cargo)
+          persistence.update(cargo.id, mapper.to_dao(cargo))
         end
       end
     end

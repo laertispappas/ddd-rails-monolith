@@ -4,9 +4,11 @@ module ActiveRepository
       unit_of_work.register_added(entity, self)
     end
 
-    def set(key, entity)
-      if get(key).nil?
-        store(entity)
+    def update(entity)
+      if entity.id.nil?
+        raise "Cannot update new record"
+        # or
+        # store(entity)
       else
         unit_of_work.register_changed(entity, self)
       end
