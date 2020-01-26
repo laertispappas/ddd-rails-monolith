@@ -19,15 +19,15 @@ module ActiveRepository
     def commit!
       # TODO: open transaction
       deleted_entities.each do |entity, repo|
-        repo.persist_deleted(entity)
+        repo.send :persist_deleted, entity
       end
 
       added_entities.each do |entity, repo|
-        repo.persist_new(entity)
+        repo.send :persist_new, entity
       end
 
       changed_entities.each do |entity, repo|
-        repo.persist_updated(entity)
+        repo.send :persist_updated, entity
       end
 
       set_init!
