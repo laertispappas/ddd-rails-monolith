@@ -54,6 +54,10 @@ module Booking
         def persist_updated(cargo)
           persistence.update(cargo.id, mapper.to_dao(cargo))
         end
+
+        def persist_deleted(cargo)
+          persistence.delete(cargo.id)
+        end
       end
     end
   end
