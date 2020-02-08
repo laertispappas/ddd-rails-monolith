@@ -34,20 +34,7 @@ module Booking
         # unit of work callbacks.
 
         def persist_new(entity)
-          cargo = Domain::Aggregates::Cargo.new(
-            booking_id: Domain::ValueObjects::BookingId.new(value: "aaa"),
-            booking_amount: Domain::ValueObjects::BookingAmount.new(value: 100),
-            route_specification: Domain::ValueObjects::RouteSpecification.new(
-              origin: Domain::Entities::Location.new(name: "spec_origin_name", un_loc_code: "spec_origin_un_loc_code"),
-              destination: Domain::Entities::Location.new(
-                name: "spec_destin_name", un_loc_code: "spec_destin_un_loc_code"),
-              arrival_deadline: Time.now.to_datetime
-            ),
-            cargo_itinerary: Domain::ValueObjects::CargoItinerary.new(legs: []),
-            delivery: nil,
-            location: Domain::Entities::Location.new(name: "name", un_loc_code: "un_loc_code"))
-
-          persistence.create(mapper.to_dao(cargo))
+          persistence.create(mapper.to_dao(entity))
         end
 
         def persist_updated(cargo)

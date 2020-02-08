@@ -15,18 +15,23 @@ module Booking
                 name: "TODO", un_loc_code: "TODO"),
               arrival_deadline: Time.now.to_datetime
             ),
-            cargo_itinerary: Domain::ValueObjects::CargoItinerary.new(legs: []),
-            delivery: nil,
-            location: Domain::Entities::Location.new(name: "TODO", un_loc_code: "TODO"))
+            itinerary: Domain::ValueObjects::CargoItinerary.new(legs: []),
+            delivery: Domain::ValueObjects::Delivery.new(
+              routing_status: dao.routing_status, transport_status: dao.transport_status,
+              last_known_location: nil, current_voyage: nil, # TODO
+              last_event: Domain::ValueObjects::LastCargoHandledEvent::EMPTY # TODO
+            ),
+            origin: Domain::Entities::Location.new(un_loc_code: "TODO"),
+            location: Domain::Entities::Location.new(un_loc_code: "TODO"))
         end
 
         # TODO: rest
         def to_dao(entity)
           {
-            booking_id: entity.booking_id&.value,
+            booking_id: entity.booking_id.value,
             booking_amount: entity.booking_amount.value,
-            transport_status: "TODO",
-            routing_status: "TODO",
+            transport_status: entity.delivery.transport_status,
+            routing_status: entity.delivery.routing_status,
           }
         end
       end

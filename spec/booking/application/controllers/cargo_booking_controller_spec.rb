@@ -4,6 +4,7 @@ module Booking
   module Application
     module Controllers
       RSpec.describe CargoBookingsController, type: :request do
+        let(:repo) { Infrastructure::Repositories::CargoRepository.new }
         let(:path) { "/bookings" }
         let(:params) {
           {
@@ -18,6 +19,14 @@ module Booking
         it "responds with the correct http response" do
           do_request
           expect(response.status).to eq 200
+        end
+
+        it "responds with the correct body" do
+          do_request
+
+          json = JSON.parse(response.body)
+          expect(json["value"]).to be_present
+          expect(repo.get_by_booking_id(json["value"])).to be_a(Domain::Aggregates::Cargo)
         end
       end
     end
