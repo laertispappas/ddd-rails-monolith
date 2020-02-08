@@ -2,12 +2,11 @@ module Booking
   module Domain
     module Aggregates
       class Cargo < Entity
-        attribute :booking_id, Types.Instance(ValueObjects::BookingId).optional.default(nil)
+        attribute :booking_id, Types.Instance(ValueObjects::BookingId)
         attribute :booking_amount, Types.Instance(ValueObjects::BookingAmount)
         attribute :route_specification, Types.Instance(ValueObjects::RouteSpecification)
-        attribute :itinerary, Types.Instance(ValueObjects::CargoItinerary).optional
-        attribute :delivery, Types.Instance(ValueObjects::Delivery).optional.default(nil)
-
+        attribute :itinerary, Types.Instance(ValueObjects::CargoItinerary)
+        attribute :delivery, Types.Instance(ValueObjects::Delivery)
         attribute :origin, Types.Instance(Entities::Location)
 
         def self.from_command(book_cargo_command)
