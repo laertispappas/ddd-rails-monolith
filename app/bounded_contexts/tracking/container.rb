@@ -10,6 +10,9 @@ module Tracking
       register(:tracking_event_persistence) {
         Infrastructure::Persistence::HandlingEventPersistence
       }
+      register(:assign_tracking_id_service) {
+        Application::Services::AssignTrackingId.new
+      }
     end
 
     Inject = Dry::AutoInject(Container)
