@@ -15,7 +15,7 @@ module Booking
                 name: "TODO", un_loc_code: "TODO"),
               arrival_deadline: Time.now.to_datetime
             ),
-            itinerary: Domain::ValueObjects::CargoItinerary.new(legs: []),
+            itinerary: Domain::ValueObjects::CargoItinerary.new(legs: map_legs(dao)),
             delivery: Domain::ValueObjects::Delivery.new(
               routing_status: dao.routing_status, transport_status: dao.transport_status,
               last_known_location: nil, current_voyage: nil, # TODO
@@ -37,6 +37,18 @@ module Booking
             spec_arrival_deadline: entity.route_specification.arrival_deadline,
             origin_id: entity.origin.un_loc_code,
           }
+        end
+
+        def map_legs(dao)
+          dao.legs.map do |leg_dao|
+            Domain::ValueObjects::Leg.new(
+              voyage: Domain::ValueObjects::Voyage.new(number: leg_dao.voyage_number),
+              load_location: Domain::Entities::Location.new(un_loc_code: leg_dao.load_location_id),
+              unload_location: Domain::Entities::Location.new(un_loc_code: leg_dao.unload_location_id),
+              load_time: leg_dao.load_time.to_datetime,
+              unload_time: leg_dao.unload_time.to_datetime
+            )
+          end
         end
       end
     end

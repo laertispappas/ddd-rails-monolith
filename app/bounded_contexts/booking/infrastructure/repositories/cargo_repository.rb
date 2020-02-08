@@ -48,7 +48,7 @@ module Booking
           cargo.itinerary.legs.each do |leg|
             leg_persistence.create!(
               cargo_id: cargo.id,
-              load_time: leg.load_location, unload_time: leg.unload_time,
+              load_time: leg.load_time, unload_time: leg.unload_time,
               load_location_id: leg.load_location.un_loc_code,
               unload_location_id: leg.unload_location.un_loc_code,
               voyage_number: leg.voyage.number,

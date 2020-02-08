@@ -24,6 +24,15 @@ module Booking
           do_request
           expect(response.status).to eq 200
         end
+
+        it "creates update the cargo itinerary" do
+          do_request
+          updated = repo.get_by_booking_id(cargo.booking_id.value)
+
+          # from ExternalCargoRoutingServiceClient::FAKE_ROUTES
+          expect(updated.itinerary.legs).to be_present
+          expect(updated.itinerary.legs.size).to eq 2
+        end
       end
     end
   end
