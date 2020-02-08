@@ -5,7 +5,7 @@ module Tracking
         Infrastructure::Repositories::TrackingRepository.new
       }
       register(:tracking_persistence) {
-        Infrastructure::Persistence::TrackingPersistence.new
+        Infrastructure::Persistence::TrackingPersistence
       }
     end
 

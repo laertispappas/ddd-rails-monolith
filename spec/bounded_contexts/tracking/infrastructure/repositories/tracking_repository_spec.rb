@@ -5,7 +5,6 @@ module Tracking
     module Repositories
       describe TrackingRepository, type: :model do
         let(:repo) { TrackingRepository.new }
-
       end
     end
   end
