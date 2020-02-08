@@ -29,8 +29,8 @@ module Booking
           )
         end
 
-        def assign_to_route(itinerary)
-          raise NotImplementedError
+        def assign_to_route(cargo_itinerary)
+          attributes[:itinerary] = cargo_itinerary
         end
       end
     end

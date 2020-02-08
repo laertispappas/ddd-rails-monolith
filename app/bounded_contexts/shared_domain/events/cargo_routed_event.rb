@@ -1,7 +1,7 @@
 module SharedDomain
   module Events
     class CargoRoutedEvent < ValueObject
-      attribute :id, Types::String
+      attribute :booking_id, Types::String
     end
   end
 end
