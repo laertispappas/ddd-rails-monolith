@@ -1,7 +1,7 @@
 module Booking
   module Infrastructure
     module Services
-      class CargoRoutingService
+      class ExternalCargoRoutingServiceClient
         include Booking::AppContainer::Inject[client: "shared.http_client"]
 
         # Demonstration path

@@ -9,6 +9,10 @@ module Booking
         attribute :delivery, Types.Instance(ValueObjects::Delivery).optional.default(nil)
 
         attribute :location, Types.Instance(Entities::Location)
+
+        def assign_to_route(itinerary)
+          raise NotImplementedError
+        end
       end
     end
   end
