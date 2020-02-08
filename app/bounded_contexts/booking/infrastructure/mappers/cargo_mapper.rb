@@ -35,6 +35,7 @@ module Booking
             spec_origin_id: entity.route_specification.origin.un_loc_code,
             spec_destination_id: entity.route_specification.destination.un_loc_code,
             spec_arrival_deadline: entity.route_specification.arrival_deadline,
+            origin_id: entity.origin.un_loc_code,
           }
         end
       end
