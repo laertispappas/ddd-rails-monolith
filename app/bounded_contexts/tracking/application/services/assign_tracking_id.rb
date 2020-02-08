@@ -5,6 +5,14 @@ module Tracking
         include Container::Inject[tracking_repo: "tracking.tracking_repository"]
 
         def assign_tracking_number_to_cargo(assign_tracking_number_command)
+          tracking_number = tracking_repo.next_tracking_number
+          assign_tracking_number_command.set_tracking_number(tracking_number)
+          activity = Domain::Aggregates::TrackingActivity.from_command(assign_tracking_number_command)
+
+          tracking_repo.store(activity)
+          tracking_repo.commit!
+
+          Domain::Aggregates::TrackingNumber.new(value: tracking_number)
         end
 
         def add_tracking_event(add_tracking_event_command)
