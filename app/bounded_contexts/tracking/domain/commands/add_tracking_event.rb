@@ -1,7 +1,7 @@
 module Tracking
   module Domain
     module Commands
-      class AssignTrackingNumber < Dry::Struct
+      class AddTrackingEvent < Dry::Struct
         attribute :booking_id, Types::String
         attribute :event_time, Types::DateTime
         attribute :event_type, Types::String

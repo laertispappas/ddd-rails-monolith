@@ -16,6 +16,13 @@ module Tracking
         end
 
         def add_tracking_event(add_tracking_event_command)
+          tracking_activity = tracking_repo.find_by_booking_id(
+            add_tracking_event_command.booking_id
+          )
+
+          tracking_activity.add_tracking_event(add_tracking_event_command)
+          tracking_repo.update(tracking_activity)
+          tracking_repo.commit!
         end
       end
     end

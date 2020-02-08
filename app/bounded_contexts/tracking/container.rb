@@ -7,6 +7,9 @@ module Tracking
       register(:tracking_persistence) {
         Infrastructure::Persistence::TrackingPersistence
       }
+      register(:tracking_event_persistence) {
+        Infrastructure::Persistence::HandlingEventPersistence
+      }
     end
 
     Inject = Dry::AutoInject(Container)

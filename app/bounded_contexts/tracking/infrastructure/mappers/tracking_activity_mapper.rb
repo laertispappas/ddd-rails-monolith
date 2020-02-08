@@ -6,9 +6,10 @@ module Tracking
 
         def to_entity(dao)
           Domain::Aggregates::TrackingActivity.new(
+            id: dao.id,
             tracking_number: Domain::Aggregates::TrackingNumber.new(value: dao.tracking_number),
             booking_id: Domain::Entities::TrackingBookingId.new(value: dao.booking_id),
-            tracking_activity_event: Domain::Entities::TrackingActivityEvent::EMPTY_ACTIVITY # TODO
+            tracking_activity_events: to_events_entity(dao)
           )
         end
 
@@ -17,6 +18,10 @@ module Tracking
             tracking_number: tracking_activity_entity.tracking_number.value,
             booking_id: tracking_activity_entity.booking_id.value
           }
+        end
+
+        private def to_events_entity(dao)
+          dao.tracking_events.map { |evt_dao| TrackingEventMapper.to_entity(evt_dao) }
         end
       end
     end
