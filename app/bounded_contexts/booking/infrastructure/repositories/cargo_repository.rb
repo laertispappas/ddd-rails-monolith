@@ -7,7 +7,6 @@ module Booking
         mapper(Mappers::CargoMapper)
         persists_to(:cargos)
 
-        #
         def get(id)
           mapper.to_entity(persistence.find_by(id: id))
         end

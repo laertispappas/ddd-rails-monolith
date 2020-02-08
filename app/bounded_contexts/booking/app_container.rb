@@ -7,8 +7,13 @@ module Booking
       register(:cargo_repository) {
         Infrastructure::Repositories::CargoRepository.new
       }
-      register(:cargo_routing_service) {
-        Infrastructure::Services::CargoRoutingService.new
+
+      register(:external_cargo_routing_service) {
+        Booking::Application::Services::ExternalCargoRoutingService.new
+      }
+
+      register(:external_cargo_routing_service_client) {
+        Booking::Infrastructure::Services::ExternalCargoRoutingServiceClient.new
       }
     end
 

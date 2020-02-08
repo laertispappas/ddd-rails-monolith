@@ -5,14 +5,13 @@ module Booking
         include AppContainer::Inject[
           event_dispatcher: "shared.event_dispatcher",
           cargo_repository: "booking.cargo_repository",
-          cargo_routing_service: "booking.cargo_routing_service",
-          external_cargo_routing_service: "App::Services::ExternalCargoRoutingService"
+          external_cargo_routing_service: "booking.external_cargo_routing_service"
         ]
 
         def book_cargo(book_cargo_command)
           booking_id = cargo_repository.next_booking_id
           book_cargo_command.set_booking_id(booking_id)
-          cargo = new Domain::Aggregates::Cargo.new(book_cargo_command);
+          cargo = new Domain::Aggregates::Cargo.from_command(book_cargo_command)
 
           cargo_repository.store(cargo)
           event_dispatcher.emit(SharedDomain::Events::CargoBookedEvent.new(id: booking_id))
