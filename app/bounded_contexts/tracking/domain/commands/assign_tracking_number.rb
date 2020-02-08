@@ -4,6 +4,10 @@ module Tracking
       class AssignTrackingNumber < Dry::Struct
         attribute :booking_id, Types::String
         attribute :tracking_number, Types::String
+
+        def set_tracking_number(number)
+          attributes[:tracking_number] = number
+        end
       end
     end
   end
