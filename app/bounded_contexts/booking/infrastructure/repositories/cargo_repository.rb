@@ -2,8 +2,8 @@ module Booking
     module Infrastructure
     module Repositories
       class CargoRepository < ActiveRepository::BaseRepository
-
         include Booking::AppContainer::Inject[cargo_persistence: "booking.cargo_persistence"]
+        include Booking::AppContainer::Inject[leg_persistence: "booking.leg_persistence"]
 
         def get(id)
           to_entity(cargo_persistence.find_by(id: id))
@@ -44,7 +44,16 @@ module Booking
         end
 
         def persist_updated(cargo)
-          cargo_persistence.update(cargo.id, mapper.to_dao(cargo))
+          cargo_persistence.update(cargo.id, to_dao(cargo))
+          cargo.itinerary.legs.each do |leg|
+            leg_persistence.create!(
+              cargo_id: cargo.id,
+              load_time: leg.load_location, unload_time: leg.unload_time,
+              load_location_id: leg.load_location.un_loc_code,
+              unload_location_id: leg.unload_location.un_loc_code,
+              voyage_number: leg.voyage.number,
+            )
+          end
         end
 
         def persist_deleted(cargo)
