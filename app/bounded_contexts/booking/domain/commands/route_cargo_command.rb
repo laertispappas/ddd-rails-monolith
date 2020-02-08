@@ -2,7 +2,7 @@ module Booking
   module Domain
     module Commands
       class RouteCargoCommand < Dry::Struct
-        attribute :booking_id, Types::String.optional.default(nil)
+        attribute :booking_id, Types::String
       end
     end
   end

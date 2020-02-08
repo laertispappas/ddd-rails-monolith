@@ -5,4 +5,5 @@ Rails.application.routes.draw do
     end
   end
   post "/bookings", to: UrlHelper.path(:booking, "cargo_bookings", :create)
+  post "/cargorouting", to: UrlHelper.path(:booking, "cargo_routing", :create)
 end

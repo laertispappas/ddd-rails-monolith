@@ -22,7 +22,8 @@ module Booking
         end
 
         def assign_route_to_cargo(route_cargo_command)
-          cargo = cargo_repository.find(new BookingId(route_cargo_command.booking_id))
+          booking_id = Domain::ValueObjects::BookingId.new(value: route_cargo_command.booking_id)
+          cargo = cargo_repository.get_by_booking_id(booking_id.value)
 
           itinerary = external_cargo_routing_service.
             fetch_route_for_specification(cargo.route_specification)

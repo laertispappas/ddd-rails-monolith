@@ -22,7 +22,26 @@ module Booking
         private
 
         def to_transit_path(json)
-          edges = json[:edges].map { |edge| to_transit_edge(edge) }
+          # fake api response !
+          _json = {
+            edges: [
+              {
+                voyage_number: "voyage_number edge 1",
+                from_un_locode: "ATH",
+                to_un_locode: "HAM",
+                from_date: 1.day.from_now.iso8601,
+                to_date: 1.week.from_now.iso8601
+              },
+              {
+                voyage_number: "voyage_number ecge 2",
+                from_un_locode: "HAM",
+                to_un_locode: "LIS",
+                from_date: 1.weeks.from_now.iso8601,
+                to_date: 2.weeks.from_now.iso8601
+              }
+            ]
+          }
+          edges = _json[:edges].map { |edge| to_transit_edge(edge) }
           SharedDomain::Model::TransitPath.new(edges: edges)
         end
 

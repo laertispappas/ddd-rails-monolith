@@ -14,16 +14,17 @@ module Booking
           legs = transit_path.edges.map do |edge|
             to_leg(edge)
           end
-          CargoItinerary.new(legs: legs)
+
+          Domain::ValueObjects::CargoItinerary.new(legs: legs)
         end
 
         private
 
         def to_leg(edge)
-          Leg.new(
-            voyage: Voyage.new(edge.voyage_number),
-            location: Location.new(edge.from_un_locode),
-            unload_location: Location.new(edge.to_un_locode),
+          Domain::ValueObjects::Leg.new(
+            voyage: Domain::ValueObjects::Voyage.new(number: edge.voyage_number),
+            load_location: Domain::Entities::Location.new(un_loc_code: edge.from_un_locode),
+            unload_location: Domain::Entities::Location.new(un_loc_code: edge.to_un_locode),
             load_time: edge.from_date,
             unload_time: edge.to_date
           )

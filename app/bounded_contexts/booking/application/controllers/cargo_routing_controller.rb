@@ -1,14 +1,20 @@
-class CargoRoutingController < ApplicationController
-  def create
-    Services::CargoBookingService.new.assign_route_to_cargo(route_cargo_command)
-    head :ok
-  end
+module Booking
+  module Application
+    module Controllers
+      class CargoRoutingController < ApplicationController
+        def create
+          Services::CargoBookingService.new.assign_route_to_cargo(route_cargo_command)
+          head :ok
+        end
 
-  private
+        private
 
-  def route_cargo_command
-    Domain::Commands::BookCargoCommand.new(
-      booking_amount: params.require(:booking_amount).to_i,
-    )
+        def route_cargo_command
+          Domain::Commands::RouteCargoCommand.new(
+            booking_id: params.require(:booking_id),
+            )
+        end
+      end
+    end
   end
 end
