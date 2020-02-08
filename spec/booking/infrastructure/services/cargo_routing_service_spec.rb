@@ -51,7 +51,7 @@ module Booking
             origin: "ATH", destination: "HAM", arrival_deadline: 1.week.from_now.iso8601
           )
           expect(res).to be_a SharedDomain::Model::TransitPath
-          expect(res.edges.size).to eq 1
+          expect(res.edges.size).to eq 2
         end
       end
     end

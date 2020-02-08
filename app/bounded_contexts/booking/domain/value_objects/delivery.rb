@@ -10,7 +10,7 @@ module Booking
 
 
 
-        # attribute :nextExpectedActivity, Types.Instance(ValueObjects::CargoHandlingActivity)
+        # attribute :next_expected_activity, Types.Instance(ValueObjects::CargoHandlingActivity)
 
         # Predictions for the Cargo activity. Helps the operator in determining if
         # anything needs to be changed for the future
