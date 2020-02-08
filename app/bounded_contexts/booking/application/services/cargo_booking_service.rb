@@ -29,7 +29,8 @@ module Booking
             fetch_route_for_specification(cargo.route_specification)
 
           cargo.assign_to_route(itinerary)
-          cargo_repository.store(cargo)
+          cargo_repository.update(cargo)
+          cargo_repository.commit!
 
           cargo_routed_event = SharedDomain::Events::CargoRoutedEvent.new(
             booking_id: route_cargo_command.booking_id

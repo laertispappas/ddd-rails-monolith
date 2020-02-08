@@ -1,5 +1,9 @@
 module ActiveRepository
-  module BaseRepository
+  class BaseRepository
+    def unit_of_work
+      @unit_of_work ||= UnitOfWork.new(ActiveRepository::ActiveRecord)
+    end
+
     def store(entity)
       unit_of_work.register_added(entity, self)
     end

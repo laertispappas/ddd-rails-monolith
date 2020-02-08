@@ -1,26 +1,24 @@
 module Booking
     module Infrastructure
     module Repositories
-      class CargoRepository
-        include ActiveRepository.Provide(:active_record)
+      class CargoRepository < ActiveRepository::BaseRepository
 
-        mapper(Mappers::CargoMapper)
-        persists_to(:cargos)
+        include Booking::AppContainer::Inject[cargo_persistence: "booking.cargo_persistence"]
 
         def get(id)
-          mapper.to_entity(persistence.find_by(id: id))
+          to_entity(cargo_persistence.find_by(id: id))
         end
 
         def get_by_booking_id(booking_id)
-          mapper.to_entity(persistence.find_by(booking_id: booking_id))
+          to_entity(cargo_persistence.find_by(booking_id: booking_id))
         end
 
         def find_all
-          persistence.all.map { |entity| mapper.to_entity(entity) }
+          cargo_persistence.all.map { |entity| to_entity(entity) }
         end
 
         def find_all_booking_ids
-          persistence.all.map(&:booking_id).flat_map do |booking_id|
+          cargo_persistence.all.map(&:booking_id).flat_map do |booking_id|
             Domain::ValueObjects::BookingId.new(value: booking_id)
           end
         end
@@ -31,18 +29,26 @@ module Booking
 
         private
 
+        def to_entity(dao)
+          Mappers::CargoMapper.to_entity(dao)
+        end
+
+        def to_dao(entity)
+          Mappers::CargoMapper.to_dao(entity)
+        end
+
         # unit of work callbacks.
 
         def persist_new(entity)
-          persistence.create(mapper.to_dao(entity))
+          cargo_persistence.create(to_dao(entity))
         end
 
         def persist_updated(cargo)
-          persistence.update(cargo.id, mapper.to_dao(cargo))
+          cargo_persistence.update(cargo.id, mapper.to_dao(cargo))
         end
 
         def persist_deleted(cargo)
-          persistence.delete(cargo.id)
+          cargo_persistence.delete(cargo.id)
         end
       end
     end

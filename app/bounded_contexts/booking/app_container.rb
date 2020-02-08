@@ -15,6 +15,14 @@ module Booking
       register(:external_cargo_routing_service_client) {
         Booking::Infrastructure::Services::ExternalCargoRoutingServiceClient.new
       }
+
+      register(:cargo_persistence) {
+        Booking::Infrastructure::Persistence::CargoPersistence
+      }
+
+      register(:leg_persistence) {
+        Booking::Infrastructure::Persistence::LegPersistence
+      }
     end
 
     Inject = Dry::AutoInject(AppContainer)
