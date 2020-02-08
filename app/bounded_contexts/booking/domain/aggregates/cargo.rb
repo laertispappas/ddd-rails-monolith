@@ -17,6 +17,7 @@ module Booking
             arrival_deadline: book_cargo_command.dest_arrival_deadline
           )
           delivery = ValueObjects::Delivery.derived_from(
+            route_specification,
             ValueObjects::CargoItinerary::EMPTY,
             ValueObjects::LastCargoHandledEvent::EMPTY
           )
@@ -31,6 +32,7 @@ module Booking
 
         def assign_to_route(cargo_itinerary)
           attributes[:itinerary] = cargo_itinerary
+          # attributes[:delivery] = delivery.update_on_routing(route_specification, itinerary)
         end
       end
     end

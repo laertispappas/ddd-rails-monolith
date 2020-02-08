@@ -8,23 +8,21 @@ module Booking
         attribute :current_voyage, Types.Instance(ValueObjects::Voyage).optional
         attribute :last_event, Types.Instance(ValueObjects::LastCargoHandledEvent)
 
-
-
         # attribute :next_expected_activity, Types.Instance(ValueObjects::CargoHandlingActivity)
 
         # Predictions for the Cargo activity. Helps the operator in determining if
         # anything needs to be changed for the future
         # NO_ACTIVITY = CargoHandlingActivity.new
 
-        def self.derived_from(itinerary, last_cargo_handled_event)
+        def self.derived_from(_route_specification, itinerary, last_cargo_handled_event)
           last_known_location = calculate_transport_status(last_cargo_handled_event)
 
-          new(lastEvent: last_cargo_handled_event,
-              routing_status: calculate_routing_status(itinerary),
+          new(routing_status: calculate_routing_status(itinerary),
               transport_status: calculate_transport_status(last_cargo_handled_event),
               last_known_location: calculate_last_known_location(last_cargo_handled_event),
               current_voyage: calculate_current_voyage(last_known_location, last_cargo_handled_event),
-              last_event: last_cargo_handled_event
+              last_event: last_cargo_handled_event,
+              # next_expected_activity: calculate_next_expected_activity(route_specification, itinerary)
           )
         end
 
@@ -62,6 +60,12 @@ module Booking
             ValueObjects::Voyage.new(number: last_event.handling_event_voyage)
           end
         end
+
+        def update_on_routing(route_specification, itinerary)
+          self.class.derived_from(route_specification, itinerary, last_event)
+        end
+
+        # def calculate_next_expected_activity(); end
       end
     end
   end
