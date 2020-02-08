@@ -17,7 +17,7 @@ module Booking
             arrival_deadline: book_cargo_command.dest_arrival_deadline
           )
           delivery = ValueObjects::Delivery.derived_from(
-            route_specification, ValueObjects::CargoItinerary::EMPTY,
+            ValueObjects::CargoItinerary::EMPTY,
             ValueObjects::LastCargoHandledEvent::EMPTY
           )
           new(booking_id: ValueObjects::BookingId.new(value: book_cargo_command.booking_id),

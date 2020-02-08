@@ -27,7 +27,7 @@ module Booking
         end
       end
 
-      RSpec.describe CargoRoutingService, type: :model do
+      RSpec.describe ExternalCargoRoutingServiceClient, type: :model do
         # dependency injection is provided by dry-container. Quite neat.
         #
         let(:service) { described_class.new }

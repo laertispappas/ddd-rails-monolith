@@ -11,12 +11,14 @@ module Booking
         def book_cargo(book_cargo_command)
           booking_id = cargo_repository.next_booking_id
           book_cargo_command.set_booking_id(booking_id)
-          cargo = new Domain::Aggregates::Cargo.from_command(book_cargo_command)
+          cargo = Domain::Aggregates::Cargo.from_command(book_cargo_command)
 
           cargo_repository.store(cargo)
+          cargo_repository.commit!
+
           event_dispatcher.emit(SharedDomain::Events::CargoBookedEvent.new(id: booking_id))
 
-          Domain::ValueObject::BookingId.new(value: booking_id)
+          Domain::ValueObjects::BookingId.new(value: booking_id)
         end
 
         def assign_route_to_cargo(route_cargo_command)
