@@ -1,7 +1,7 @@
 module Booking
   module Application
     module Services
-      class CargoBookingService
+      class CargoBooking
         include AppContainer::Inject[
           event_dispatcher: "shared.event_dispatcher",
           cargo_repository: "booking.cargo_repository",

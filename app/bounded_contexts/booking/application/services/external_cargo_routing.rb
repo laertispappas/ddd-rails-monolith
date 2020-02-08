@@ -1,7 +1,7 @@
 module Booking
   module Application
     module Services
-      class ExternalCargoRoutingService
+      class ExternalCargoRouting
         include AppContainer::Inject[client: "booking.external_cargo_routing_service_client"]
 
         def fetch_route_for_specification(route_specification)

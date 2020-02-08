@@ -3,7 +3,7 @@ module Booking
     module Controllers
       class CargoRoutingController < ApplicationController
         def create
-          Services::CargoBookingService.new.assign_route_to_cargo(route_cargo_command)
+          Services::CargoBooking.new.assign_route_to_cargo(route_cargo_command)
           head :ok
         end
 

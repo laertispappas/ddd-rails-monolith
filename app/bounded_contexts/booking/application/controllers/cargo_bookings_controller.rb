@@ -3,7 +3,7 @@ module Booking
     module Controllers
       class CargoBookingsController < ApplicationController
         def create
-          booking_id = Services::CargoBookingService.new.book_cargo(book_command)
+          booking_id = Services::CargoBooking.new.book_cargo(book_command)
 
           render json: booking_id
         end

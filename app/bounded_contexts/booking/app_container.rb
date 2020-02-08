@@ -2,14 +2,14 @@ module Booking
   class AppContainer < SharedDomain::Container
     namespace :booking do
       register(:cargo_booking_service) {
-        Booking::Application::Services::CargoBookingService.new
+        Booking::Application::Services::CargoBooking.new
       }
       register(:cargo_repository) {
         Infrastructure::Repositories::CargoRepository.new
       }
 
       register(:external_cargo_routing_service) {
-        Booking::Application::Services::ExternalCargoRoutingService.new
+        Booking::Application::Services::ExternalCargoRouting.new
       }
 
       register(:external_cargo_routing_service_client) {
