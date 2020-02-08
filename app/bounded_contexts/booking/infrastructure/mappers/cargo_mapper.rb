@@ -32,6 +32,9 @@ module Booking
             booking_amount: entity.booking_amount.value,
             transport_status: entity.delivery.transport_status,
             routing_status: entity.delivery.routing_status,
+            spec_origin_id: entity.route_specification.origin.un_loc_code,
+            spec_destination_id: entity.route_specification.destination.un_loc_code,
+            spec_arrival_deadline: entity.route_specification.arrival_deadline,
           }
         end
       end
