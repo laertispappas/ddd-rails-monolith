@@ -9,18 +9,9 @@ module Booking
             id: dao.id,
             booking_id: Domain::ValueObjects::BookingId.new(value: dao.booking_id),
             booking_amount: Domain::ValueObjects::BookingAmount.new(value: dao.booking_amount),
-            route_specification: Domain::ValueObjects::RouteSpecification.new(
-              origin: Domain::Entities::Location.new(name: "TODO", un_loc_code: "TODO"),
-              destination: Domain::Entities::Location.new(
-                name: "TODO", un_loc_code: "TODO"),
-              arrival_deadline: Time.now.to_datetime
-            ),
-            itinerary: Domain::ValueObjects::CargoItinerary.new(legs: map_legs(dao)),
-            delivery: Domain::ValueObjects::Delivery.new(
-              routing_status: dao.routing_status, transport_status: dao.transport_status,
-              last_known_location: nil, current_voyage: nil, # TODO
-              last_event: Domain::ValueObjects::LastCargoHandledEvent::EMPTY # TODO
-            ),
+            route_specification: to_route_specification_entity,
+            itinerary: Domain::ValueObjects::CargoItinerary.new(legs: to_leg_entity(dao)),
+            delivery: to_delivery_entity(dao),
             origin: Domain::Entities::Location.new(un_loc_code: "TODO"),
             location: Domain::Entities::Location.new(un_loc_code: "TODO"))
         end
@@ -39,16 +30,27 @@ module Booking
           }
         end
 
-        def map_legs(dao)
+        private def to_leg_entity(dao)
           dao.legs.map do |leg_dao|
-            Domain::ValueObjects::Leg.new(
-              voyage: Domain::ValueObjects::Voyage.new(number: leg_dao.voyage_number),
-              load_location: Domain::Entities::Location.new(un_loc_code: leg_dao.load_location_id),
-              unload_location: Domain::Entities::Location.new(un_loc_code: leg_dao.unload_location_id),
-              load_time: leg_dao.load_time.to_datetime,
-              unload_time: leg_dao.unload_time.to_datetime
-            )
+            LegMapper.to_entity(leg_dao)
           end
+        end
+
+        private def to_route_specification_entity
+          Domain::ValueObjects::RouteSpecification.new(
+            origin: Domain::Entities::Location.new(name: "TODO", un_loc_code: "TODO"),
+            destination: Domain::Entities::Location.new(
+              name: "TODO", un_loc_code: "TODO"),
+            arrival_deadline: Time.now.to_datetime
+          )
+        end
+
+        private def to_delivery_entity(cargo_dao)
+          Domain::ValueObjects::Delivery.new(
+            routing_status: cargo_dao.routing_status, transport_status: cargo_dao.transport_status,
+            last_known_location: nil, current_voyage: nil, # TODO
+            last_event: Domain::ValueObjects::LastCargoHandledEvent::EMPTY # TODO
+          )
         end
       end
     end
