@@ -10,16 +10,16 @@ module Routing
         def find_optimal_route
           # origin, destination, deadline
           voyages = query.find_all
-
-          transit_edges = voyages.map do |voyage|
-            movement = voyage.schedule.carrier_movements[0]
-            TransitEdge.new(
-              voyage_number: voyage.voyage_number.value,
-              from_date: movement.arrival_date,
-              to_date: movement.departure_date,
-              from_un_loc_code: movement.arrival_location.un_loc_code,
-              to_un_loc_code: movement.departure_location.un_loc_code
-            )
+          transit_edges = voyages.flat_map do |voyage|
+            voyage.schedule.carrier_movements.flat_map do |movement|
+              SharedDomain::Model::TransitEdge.new(
+                voyage_number: voyage.voyage_number.value,
+                from_date: movement.arrival_date,
+                to_date: movement.departure_date,
+                from_un_locode: movement.arrival_location.un_loc_code,
+                to_un_locode: movement.departure_location.un_loc_code
+              )
+            end
           end
 
           transit_path = SharedDomain::Model::TransitPath.new(edges: transit_edges)
