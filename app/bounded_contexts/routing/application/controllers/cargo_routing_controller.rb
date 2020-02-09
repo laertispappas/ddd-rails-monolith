@@ -8,7 +8,6 @@ module Routing
 
         # GET /optimal_route
         def find_optimal_route
-          # origin, destination, deadline
           voyages = query.find_all
           transit_edges = voyages.flat_map do |voyage|
             voyage.schedule.carrier_movements.flat_map do |movement|
