@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_09_000533) do
+ActiveRecord::Schema.define(version: 2020_02_09_000813) do
 
   create_table "cargos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "booking_id", null: false
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 2020_02_09_000533) do
     t.string "last_handling_event_location"
     t.string "last_handling_event_voyage"
     t.index ["booking_id"], name: "index_cargos_on_booking_id", unique: true
+  end
+
+  create_table "carrier_movements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "arrival_location_id"
+    t.string "departure_location_id"
+    t.date "arrival_date"
+    t.date "departure_date"
+    t.bigint "voyage_id"
+    t.index ["voyage_id"], name: "index_carrier_movements_on_voyage_id"
   end
 
   create_table "legs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
