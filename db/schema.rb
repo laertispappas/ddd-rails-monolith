@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_08_213148) do
+ActiveRecord::Schema.define(version: 2020_02_09_000533) do
 
   create_table "cargos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "booking_id", null: false
@@ -56,6 +56,10 @@ ActiveRecord::Schema.define(version: 2020_02_08_213148) do
     t.string "voyage_number"
     t.bigint "tracking_activity_id"
     t.index ["tracking_activity_id"], name: "index_tracking_handling_events_on_tracking_activity_id"
+  end
+
+  create_table "voyages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "voyage_number"
   end
 
 end
