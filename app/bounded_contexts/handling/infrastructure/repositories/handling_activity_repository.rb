@@ -2,9 +2,9 @@ module Handling
   module Infrastructure
     module Repositories
       class HandlingActivityRepository < ActiveRepository::BaseRepository
-        include Routing::Container::Inject[persistence: "handling.activity_persistence"]
+        include Handling::Container::Inject[persistence: "handling.activity_persistence"]
 
-        def lookup_handling_history_of_cargo(booking_id)
+        def get_handling_history_of_cargo(booking_id)
           handling_activities = persistence.where(booking_id: booking_id).map(&:to_entity)
           HandlingActivityHistory.new(handling_events: handling_activities)
         end
