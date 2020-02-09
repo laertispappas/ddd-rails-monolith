@@ -8,6 +8,11 @@ module ActiveRepository
       unit_of_work.register_added(entity, self)
     end
 
+    def store!(entity)
+      store!(entity)
+      commit!
+    end
+
     def update(entity)
       if entity.id.nil?
         raise "Cannot update new record"
